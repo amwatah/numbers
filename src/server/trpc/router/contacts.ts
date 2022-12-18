@@ -25,7 +25,7 @@ export const ContactsRouter = router({
   deleteContact: publicProcedure
     .input(
       z.object({
-        id: z.string(),
+        id: z.number(),
       })
     )
     .mutation(async ({ ctx, input }) => {
