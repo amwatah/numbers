@@ -1,10 +1,9 @@
 import { z } from "zod";
 import { publicProcedure, router } from "../trpc";
-import { myPrisna } from "./_app";
 
 export const ContactsRouter = router({
   getContacts: publicProcedure.query(async ({ ctx }) => {
-    const contacts = await myPrisna.contact.findMany();
+    const contacts = await ctx.prisma.contact.findMany();
     return contacts;
   }),
   addContacts: publicProcedure
@@ -15,7 +14,7 @@ export const ContactsRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const addedContact = await myPrisna.contact.create({
+      const addedContact = await ctx.prisma.contact.create({
         data: {
           name: input.name,
           phone: input.phone,
@@ -26,11 +25,11 @@ export const ContactsRouter = router({
   deleteContact: publicProcedure
     .input(
       z.object({
-        id: z.number(),
+        id: z.string(),
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const deletedContact = await myPrisna.contact.delete({
+      const deletedContact = await ctx.prisma.contact.delete({
         where: {
           id: input.id,
         },
