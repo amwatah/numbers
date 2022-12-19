@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import { router } from "../trpc";
 import { ContactsRouter } from "./contacts";
 
